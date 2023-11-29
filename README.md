@@ -48,3 +48,7 @@ The SQLite database file has been created but at the moment, it doesn't have any
 
 ## Interacting with the project
 In your browser, navigate to `localhost` to verify that the server for this project is up and running correctly.
+
+The 2 exposed API can be accessed at the following URL
+New Game - `localhost/api/new`
+Validate - `localhost/api/validate`

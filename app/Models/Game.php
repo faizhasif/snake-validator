@@ -34,12 +34,11 @@ class Game extends Model
 
         $this->fruit_x = $x;
         $this->fruit_y = $y;
-        $this->save();
 
         return $this;
     }
 
-    public function moveSnake(int $vel_x, int $vel_y): bool
+    public function moveSnake(): bool
     {
 
         $new_snake_x = $this->snake_x + $this->snake_vel_x;
