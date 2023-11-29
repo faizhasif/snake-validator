@@ -33,7 +33,7 @@ Run the following command to start the project
 ```
 
 ### Database Migration
-The SQLite database file has been created but at the moment, it doesn't have any schemas in it. Run the following command to migrate the database
+Run the following command to migrate the database. This will also create the file `database/database.sqlite` if it's not available yet.
 
 ```
 ./vendor/bin/sail artisan migrate
