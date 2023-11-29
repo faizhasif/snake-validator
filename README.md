@@ -25,13 +25,6 @@ After the dependencies are installed, run the following command to generate a un
 ./vendor/bin/sail artisan key:generate
 ```
 
-### Database
-This project uses SQLite to store all data. Create a new SQLite file by running the following command
-
-```
-touch database/database.sqlite
-```
-
 ## Running Projects
 Run the following command to start the project
 
@@ -52,4 +45,11 @@ In your browser, navigate to `localhost` to verify that the server for this proj
 The 2 exposed API can be accessed at the following URL
 
 New Game - `localhost/api/new`
+
 Validate - `localhost/api/validate`
+
+### Closing project
+Run the following command to close the project
+```
+./vendor/bin/sail down
+```
