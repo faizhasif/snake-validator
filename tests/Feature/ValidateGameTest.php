@@ -14,6 +14,23 @@ class ValidateGameTest extends TestCase
 
     protected $seed = true;
 
+    private $default_game_state = [
+        'gameId' => 1,
+        'width' => 10,
+        'height' => 10,
+        'score' => 0,
+        'fruit' => [
+            'x' => 3,
+            'y' => 4,
+        ],
+        'snake' => [
+            'x' => 0,
+            'y' => 0,
+            'velX' => 1,
+            'velY' => 0,
+        ],
+    ];
+
     public function test_incomplete_params(): void
     {
         $response = $this->postJson('/api/validate', []);
@@ -24,20 +41,7 @@ class ValidateGameTest extends TestCase
     public function test_move_out_of_bounds(): void
     {
         $response = $this->postJson('/api/validate', [
-            'gameId' => 1,
-            'width' => 10,
-            'height' => 10,
-            'score' => 0,
-            'fruit' => [
-                'x' => 3,
-                'y' => 4,
-            ],
-            'snake' => [
-                'x' => 0,
-                'y' => 0,
-                'velX' => 1,
-                'velY' => 0,
-            ],
+            ...$this->default_game_state,
             'ticks' => [
                 [
                     'velX' => 0,
@@ -56,20 +60,7 @@ class ValidateGameTest extends TestCase
     public function test_move_180(): void
     {
         $response = $this->postJson('/api/validate', [
-            'gameId' => 1,
-            'width' => 10,
-            'height' => 10,
-            'score' => 0,
-            'fruit' => [
-                'x' => 3,
-                'y' => 4,
-            ],
-            'snake' => [
-                'x' => 0,
-                'y' => 0,
-                'velX' => 1,
-                'velY' => 0,
-            ],
+            ...$this->default_game_state,
             'ticks' => [
                 [
                     'velX' => -1,
@@ -84,20 +75,7 @@ class ValidateGameTest extends TestCase
     public function test_move_does_not_reach_fruit(): void
     {
         $response = $this->postJson('/api/validate', [
-            'gameId' => 1,
-            'width' => 10,
-            'height' => 10,
-            'score' => 0,
-            'fruit' => [
-                'x' => 3,
-                'y' => 4,
-            ],
-            'snake' => [
-                'x' => 0,
-                'y' => 0,
-                'velX' => 1,
-                'velY' => 0,
-            ],
+            ...$this->default_game_state,
             'ticks' => [
                 [
                     'velX' => 1,
@@ -120,20 +98,7 @@ class ValidateGameTest extends TestCase
     public function test_move_to_fruit_location(): void
     {
         $response = $this->postJson('/api/validate', [
-            'gameId' => 1,
-            'width' => 10,
-            'height' => 10,
-            'score' => 0,
-            'fruit' => [
-                'x' => 3,
-                'y' => 4,
-            ],
-            'snake' => [
-                'x' => 0,
-                'y' => 0,
-                'velX' => 1,
-                'velY' => 0,
-            ],
+            ...$this->default_game_state,
             'ticks' => [
                 [
                     'velX' => 1,
@@ -142,6 +107,68 @@ class ValidateGameTest extends TestCase
                 [
                     'velX' => 1,
                     'velY' => 0,
+                ],
+                [
+                    'velX' => 0,
+                    'velY' => 1,
+                ],
+                [
+                    'velX' => 0,
+                    'velY' => 1,
+                ],
+                [
+                    'velX' => 0,
+                    'velY' => 1,
+                ],
+                [
+                    'velX' => 0,
+                    'velY' => 1,
+                ],
+                [
+                    'velX' => 0,
+                    'velY' => 1,
+                ],
+            ],
+        ]);
+
+        $response->assertStatus(200)
+        ->assertJson(fn (AssertableJson $json) =>
+            $json->hasAll([
+                'gameId',
+                'width',
+                'height',
+                'score',
+                'fruit',
+                'snake',
+            ])
+                ->where('width', 10)
+                ->where('height', 10)
+                ->where('score', 1)
+                ->where('snake.x', 3)
+                ->where('snake.y', 4)
+        );
+    }
+
+    public function test_move_to_fruit_location_and_further(): void
+    {
+        $response = $this->postJson('/api/validate', [
+            ...$this->default_game_state,
+            'ticks' => [
+                [
+                    'velX' => 1,
+                    'velY' => 0,
+                ],
+                [
+                    'velX' => 1,
+                    'velY' => 0,
+                ],
+                [
+                    'velX' => 0,
+                    'velY' => 1,
+                ],
+                [
+                    'velX' => 0,
+                    'velY' => 1,
                 ],
                 [
                     'velX' => 0,
