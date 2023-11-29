@@ -48,7 +48,13 @@ New Game - `localhost/api/new`
 
 Validate - `localhost/api/validate`
 
-### Closing project
+## Testing the project
+While the container is running, run the following command
+```
+./vendor/bin/sail artisan test
+```
+
+## Closing project
 Run the following command to close the project
 ```
 ./vendor/bin/sail down

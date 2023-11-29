@@ -44,4 +44,19 @@ class GameFactory extends Factory
             ];
         });
     }
+
+    /**
+     * Factory with a user-defined fruit location
+     *
+     * @return Factory
+     */
+    public function withFruitLocation(int $x, int $y): Factory
+    {
+        return $this->state(function (array $attributes) use ($x, $y) {
+            return [
+                'fruit_x' => $x,
+                'fruit_y' => $y,
+            ];
+        });
+    }
 }
